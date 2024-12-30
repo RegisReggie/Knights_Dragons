@@ -224,13 +224,20 @@ public class PlayerController : MonoBehaviour
         {
             if (enemy.CompareTag("Dummy"))
             {
-                // Call a method to damage the enemy.
-                enemy.GetComponent<Dummy>().TakeDamage();
+                if(enemy.GetType() == typeof(BoxCollider2D))
+                {
+                    // Call a method to damage the enemy.
+                    enemy.GetComponent<Dummy>().TakeDamage();
+                }
+                
             }
 
             if (enemy.CompareTag("Enemy"))
             {
-                enemy.GetComponent<Goblin>().TakeDamage();
+                if (enemy.GetType() == typeof(BoxCollider2D))
+                {
+                    enemy.GetComponent<Goblin>().TakeDamage();
+                }
             }
 
         }

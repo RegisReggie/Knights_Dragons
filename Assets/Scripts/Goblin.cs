@@ -50,6 +50,8 @@ public class Goblin : MonoBehaviour
     {
         isGrounded = CheckGrounded();
 
+        animator.SetBool("isDead", isDead);
+
         attackTimer -= Time.deltaTime;  // Decrease cooldown timer over time.
 
         if (!isGrounded)
@@ -72,35 +74,38 @@ public class Goblin : MonoBehaviour
             }
 
         }
-
-        if (canAttack)
+        if (!isDead)
         {
-            if (isGrounded)
+            if (canAttack)
             {
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Goblin_Attack"))
+                if (isGrounded)
                 {
-                    isAttacking = true;
-                    StopMovement();
-                    return;
-                }
-                else if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Goblin_Attack"))
-                {
-                    isAttacking = false;
-
-                    if(attackTimer <= 0f)
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("Goblin_Attack"))
                     {
-                        Attack();
+                        isAttacking = true;
+                        StopMovement();
+                        return;
                     }
+                    else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Goblin_Attack"))
+                    {
+                        isAttacking = false;
+
+                        if (attackTimer <= 0f)
+                        {
+                            Attack();
+                        }
+                    }
+
                 }
-                    
+
             }
-            
+            else
+            {
+                canMove = true;
+                isAttacking = false;
+            }
         }
-        else
-        {
-            canMove = true;
-            isAttacking = false;
-        }
+       
        
     }
 
