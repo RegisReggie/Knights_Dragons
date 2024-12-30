@@ -88,8 +88,13 @@ public class HealthBar : MonoBehaviour
     // Function to heal the player
     public void Heal(float amount)
     {
-        if(currentHealth < maxHealth)
+        if (currentHealth >= maxHealth)
         {
+            return;
+        }
+        else
+        {
+            playerController.anim.SetTrigger("Drink");
             currentHealth += amount;
 
             // Ensure current health doesn't exceed max health
@@ -107,6 +112,7 @@ public class HealthBar : MonoBehaviour
 
         if(currentMana < maxMana)
         {
+            playerController.anim.SetTrigger("Drink");
             currentMana += amount;
 
             // Ensure current mana doesn't exceed max mana

@@ -308,7 +308,6 @@ public class PlayerController : MonoBehaviour
         {
             if (healthBar.healPotionCount > 0)
             {
-                anim.SetTrigger("Drink");
                 healthBar.Heal(40f);
             }
             
@@ -321,7 +320,6 @@ public class PlayerController : MonoBehaviour
         {
             if (healthBar.manaPotionCount > 0)
             {
-                anim.SetTrigger("Drink");
                 healthBar.AddMana(40f);
             }
 
