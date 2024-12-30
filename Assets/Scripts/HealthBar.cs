@@ -48,6 +48,11 @@ public class HealthBar : MonoBehaviour
     void Update()
     {
 
+        if(playerController == null)
+        {
+            playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        }
+
         goldAmountText.text = " : " + goldAmount.ToString();
         healthPotionAmount.text = " : " + healPotionCount.ToString();
         manaPotionAmount.text = " : " + manaPotionCount.ToString() ;
@@ -57,21 +62,23 @@ public class HealthBar : MonoBehaviour
             TakeMana(25f);
         }
 
-
-
-        if(Input.GetKeyDown(KeyCode.B) && manaPotionCount > 0 && currentMana < maxMana)
-        {
-            Debug.Log("Mana Added");
-            AddMana(40f);
-            manaPotionCount--;
-        }
-
         // Update the health bar fill amount based on current health
         healthBarFill.fillAmount = currentHealth / maxHealth;
         manaBarFill.fillAmount = currentMana / maxMana;
 
         healthText.text = currentHealth.ToString();
         manaText.text = currentMana.ToString();
+
+        if(manaPotionCount <= 0)
+        {
+            manaPotionCount = 0;
+        }
+
+        if(healPotionCount <= 0)
+        {
+            healPotionCount = 0;
+        }
+
     }
 
     public void TakeMana(float manaLost)
