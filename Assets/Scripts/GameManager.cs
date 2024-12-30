@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,8 @@ public class GameManager : MonoBehaviour
         isGoldActive = false;
         isHPAmountActive = false;
         isMPAmountActive = false;
+
+        
     }
 
     // Update is called once per frame

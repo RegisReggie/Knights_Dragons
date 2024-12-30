@@ -92,7 +92,8 @@ public class Goblin : MonoBehaviour
 
                         if (attackTimer <= 0f)
                         {
-                            Attack();
+                            animator.SetTrigger("Goblin_Attack");
+                            //Attack();
                         }
                     }
 
@@ -166,7 +167,7 @@ public class Goblin : MonoBehaviour
     public void Attack()
     {
         isAttacking = true;
-        animator.SetTrigger("Goblin_Attack");
+        //animator.SetTrigger("Goblin_Attack");
 
 
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPosition.transform.position, attackRange);
