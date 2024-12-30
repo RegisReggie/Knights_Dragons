@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public RuntimeAnimatorController equipSword;
 
     public float speed;
+    public float defaultSpeed;
+
     public float dashSpeed;
     public float moveH;
 
@@ -123,24 +125,24 @@ public class PlayerController : MonoBehaviour
                 {
                     Attack();
                 }
-                
+
             }
-           
+
         }
 
         if (canCrouch)
         {
             Crouch();
         }
-        
+
         Dash(dashSpeed);
 
         if (!isDead)
         {
             //Dead();
         }
-       
-        
+
+
         if (canFlipSprite)
         {
             FlipSprite();
@@ -151,17 +153,12 @@ public class PlayerController : MonoBehaviour
             DrinkHealthPotion();
             DrinkManaPotion();
         }
-        
+
         if (canSwitchWeapon)
         {
             SwitchWeapon();
         }
 
-        if (!isDead)
-        {
-            TakeDamage(10f);
-        }
-       
 
         if (canJump)
         {
@@ -169,17 +166,6 @@ public class PlayerController : MonoBehaviour
             {
                 Jump();
             }
-        }
-
-
-        //Stop player movement when attacking
-        if (isGrounded && anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {
-            speed = 0.0f;
-        }
-        else
-        {
-            speed = 10f;
         }
     }
 
@@ -219,28 +205,38 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-            anim.SetTrigger("Attack");
+        anim.SetTrigger("Attack");
 
+
+        //Stop player movement when attacking
+        if (isGrounded && anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            speed = 0.0f;
+        }
+        else
+        {
+            speed = 10f;
+        }
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPosition.transform.position, attackRange);
 
-            foreach (Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy.CompareTag("Dummy"))
             {
-                if (enemy.CompareTag("Dummy"))
-                {
-                    // Call a method to damage the enemy.
-                    enemy.GetComponent<Dummy>().TakeDamage();
-                }
+                // Call a method to damage the enemy.
+                enemy.GetComponent<Dummy>().TakeDamage();
+            }
 
-                if (enemy.CompareTag("Enemy"))
+            if (enemy.CompareTag("Enemy"))
             {
                 enemy.GetComponent<Goblin>().TakeDamage();
             }
 
-            }
+        }
 
-            // Reset attack cooldown.
-            attackTimer = attackCooldown;
+        // Reset attack cooldown.
+        attackTimer = attackCooldown;
     }
 
     public void Crouch()
@@ -418,14 +414,16 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-
+        if (isDead)
+        {
+            return;
+        }
+        
+        
         if (isInvulnerable)
         {
             return;
         }
-        //Take out of update later
-        if (Input.GetKeyDown(KeyCode.H) && playerHealth > 0)
-        {
             anim.SetTrigger("Hurt");
 
             healthBar.currentHealth -= damage;
@@ -440,7 +438,6 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(Invunerability());
             }
-        }
     }
 
     public IEnumerator Invunerability()
@@ -481,6 +478,4 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPosition.transform.position, attackRange); // Draw circle at attack origin
 
     }
-
-    /* change the value to hit max speed over time when running and when wall jump or when not pressing anything reset the value */
 }
