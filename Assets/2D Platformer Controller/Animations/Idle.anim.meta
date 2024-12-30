@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 05bef5b0fa5b46c4987dcc568005d9bc
+timeCreated: 1472655341
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 69772
+  packageName: 2D Platformer Controller
+  packageVersion: 1.0
+  assetPath: Assets/2D Platformer Controller/Animations/Idle.anim
+  uploadId: 135092

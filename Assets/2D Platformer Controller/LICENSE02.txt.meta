@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e6e43e278640e1847845bf874caf3e42
+timeCreated: 1472658404
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 69772
+  packageName: 2D Platformer Controller
+  packageVersion: 1.0
+  assetPath: Assets/2D Platformer Controller/LICENSE02.txt
+  uploadId: 135092

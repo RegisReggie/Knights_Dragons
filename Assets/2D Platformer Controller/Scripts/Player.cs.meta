@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 21abc4c9fcee4ca418ece364c442f238
+timeCreated: 1470771119
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 69772
+  packageName: 2D Platformer Controller
+  packageVersion: 1.0
+  assetPath: Assets/2D Platformer Controller/Scripts/Player.cs
+  uploadId: 135092

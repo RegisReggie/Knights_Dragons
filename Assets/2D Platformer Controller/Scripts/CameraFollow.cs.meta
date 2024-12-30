@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 9fce164d9dc0554478c903685901260d
+timeCreated: 1470935016
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 69772
+  packageName: 2D Platformer Controller
+  packageVersion: 1.0
+  assetPath: Assets/2D Platformer Controller/Scripts/CameraFollow.cs
+  uploadId: 135092
