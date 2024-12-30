@@ -57,12 +57,7 @@ public class HealthBar : MonoBehaviour
             TakeMana(25f);
         }
 
-        if (Input.GetKeyDown(KeyCode.V) && healPotionCount > 0 && currentHealth < maxHealth) 
-        {
-            Debug.Log("Health Added");
-            Heal(40f);
-            healPotionCount--;
-        }
+
 
         if(Input.GetKeyDown(KeyCode.B) && manaPotionCount > 0 && currentMana < maxMana)
         {
@@ -93,23 +88,34 @@ public class HealthBar : MonoBehaviour
     // Function to heal the player
     public void Heal(float amount)
     {
-        currentHealth += amount;
-
-        // Ensure current health doesn't exceed max health
-        if (currentHealth > maxHealth)
+        if(currentHealth < maxHealth)
         {
-            currentHealth = maxHealth;
+            currentHealth += amount;
+
+            // Ensure current health doesn't exceed max health
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+
+            healPotionCount--;
         }
     }
 
     public void AddMana(float amount)
     {
-        currentMana += amount;
 
-        // Ensure current mana doesn't exceed max mana
-        if (currentMana > maxMana)
+        if(currentMana < maxMana)
         {
-            currentMana = maxMana;
+            currentMana += amount;
+
+            // Ensure current mana doesn't exceed max mana
+            if (currentMana > maxMana)
+            {
+                currentMana = maxMana;
+            }
+
+            manaPotionCount--;
         }
     }
 

@@ -119,7 +119,11 @@ public class PlayerController : MonoBehaviour
         {
             if (canAttack)
             {
-                Attack();
+                if (!isCrouching)
+                {
+                    Attack();
+                }
+                
             }
            
         }
@@ -144,7 +148,8 @@ public class PlayerController : MonoBehaviour
 
         if (canDrink)
         {
-            DrinkPotion();
+            DrinkHealthPotion();
+            DrinkManaPotion();
         }
         
         if (canSwitchWeapon)
@@ -297,6 +302,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void DrinkHealthPotion()
+    {
+        if (Input.GetKeyDown(KeyCode.V) && isGrounded)
+        {
+            if (healthBar.healPotionCount > 0)
+            {
+                anim.SetTrigger("Drink");
+                healthBar.Heal(40f);
+            }
+            
+        }
+    }
+
+    public void DrinkManaPotion()
+    {
+        if (Input.GetKeyDown(KeyCode.B) && isGrounded)
+        {
+            if (healthBar.manaPotionCount > 0)
+            {
+                anim.SetTrigger("Drink");
+                healthBar.AddMana(40f);
+            }
+
+        }
+    }
+
     public void Jump()
     {
 
@@ -354,13 +385,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public void DrinkPotion()
-    {
-        if(Input.GetKeyDown(KeyCode.V) && isGrounded)
-        {
-            anim.SetTrigger("Drink");
-        }
-    }
+    
 
 
     public void PlayerStats()
