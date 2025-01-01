@@ -213,7 +213,7 @@ public class Goblin : MonoBehaviour
     public IEnumerator Hurt()
     {
         canMove = false;
-        health -= 50f;
+        health -= 25f;
         animator.SetTrigger("Hurt");
         yield return new WaitForSeconds(.3f);
         canMove = true;

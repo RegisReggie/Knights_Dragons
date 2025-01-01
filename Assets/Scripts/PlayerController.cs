@@ -56,9 +56,12 @@ public class PlayerController : MonoBehaviour
     public float attackRange = 1f;  // Attack range in units.
     public float attackCooldown = 0.5f;  // Time between attacks.
     public int attackDamage = 10;  // Damage dealt by the attack.
-
     private float attackTimer = 0f;  // Timer to manage attack cooldown.
 
+    public int comboCount = 0;
+    public float comboTimer = 0f;
+    public float comboCoolDown = .35f;
+    public float resetComboTimer = -0.3f;
 
     public bool isInvulnerable = false;
     public float invulnerabilityDuration = 2f;
@@ -116,19 +119,58 @@ public class PlayerController : MonoBehaviour
 
         attackTimer -= Time.deltaTime;  // Decrease cooldown timer over time.
 
+        comboTimer -= Time.deltaTime;
+        ResetCombo();
 
-        if (Input.GetKeyDown(KeyCode.X) && attackTimer <= 0f)
+        if (Input.GetKeyDown(KeyCode.X) && isGrounded)
         {
-            if (canAttack)
+            if (!isSwordAttached)
             {
-                if (!isCrouching)
+                if (attackTimer <= 0f)
+                {
+                    if (canAttack)
+                    {
+                        if (!isCrouching)
+                        {
+                            Attack();
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                if (comboTimer <= 0)
+                {
+                    if (canAttack)
+                    {
+                        if (!isCrouching)
+                        {
+                            ComboAttack();
+                        }
+
+                    }
+                    
+                }
+            }
+            
+
+        }
+
+        if(Input.GetKeyDown(KeyCode.X) && !isGrounded)
+        {
+            if (attackTimer <= 0f)
+            {
+                if (canAttack)
                 {
                     Attack();
                 }
-
             }
-
         }
+        
+
+
+
 
         if (canCrouch)
         {
@@ -167,6 +209,13 @@ public class PlayerController : MonoBehaviour
                 Jump();
             }
         }
+
+        if (isSwordAttached)
+        {
+            
+            
+        }
+       
     }
 
     private void FixedUpdate()
@@ -175,33 +224,7 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
     }
 
-   
-    void MovePlayer()
-    {
-        if(canMove)
-        {
-            float moveDirection = moveH * speed;
-            rigidbody2.linearVelocity = new Vector2(moveDirection, rigidbody2.linearVelocity.y);
-        }
-    }
 
-    public void FlipSprite()
-    {
-        if (moveH > 0 && !facingRight)
-        {
-            Flip();
-        }
-        else if (moveH < 0 && facingRight)
-        {
-            Flip();
-        }
-    }
-
-    public void Flip()
-    {
-        facingRight = !facingRight;
-        transform.Rotate(0f, 180f, 0f);
-    }
 
     public void Attack()
     {
@@ -245,6 +268,59 @@ public class PlayerController : MonoBehaviour
         // Reset attack cooldown.
         attackTimer = attackCooldown;
     }
+
+
+    public void ComboAttack()
+    {
+        comboCount++;
+
+        switch (comboCount)
+        {
+            case 1:
+                anim.SetTrigger("Attack");
+
+                break;
+
+            case 2:
+                anim.SetTrigger("Attack2");
+                break;
+
+            case 3:
+                anim.SetTrigger("Attack3");
+                comboCount = 0;
+                break;
+
+        }
+        comboTimer = comboCoolDown;
+    }
+
+    public void ComboDamagae()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPosition.transform.position, attackRange);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy.CompareTag("Dummy"))
+            {
+                if (enemy.GetType() == typeof(BoxCollider2D))
+                {
+                    // Call a method to damage the enemy.
+                    enemy.GetComponent<Dummy>().TakeDamage();
+                }
+
+            }
+
+            if (enemy.CompareTag("Enemy"))
+            {
+                if (enemy.GetType() == typeof(BoxCollider2D))
+                {
+                    enemy.GetComponent<Goblin>().TakeDamage();
+                }
+            }
+
+        }
+    }
+
 
     public void Crouch()
     {
@@ -329,6 +405,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    public void Flip()
+    {
+        facingRight = !facingRight;
+        transform.Rotate(0f, 180f, 0f);
+    }
+
+    public void FlipSprite()
+    {
+        if (moveH > 0 && !facingRight)
+        {
+            Flip();
+        }
+        else if (moveH < 0 && facingRight)
+        {
+            Flip();
+        }
+    }
+
     public void Jump()
     {
 
@@ -386,7 +481,14 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    
+    public void MovePlayer()
+    {
+        if (canMove)
+        {
+            float moveDirection = moveH * speed;
+            rigidbody2.linearVelocity = new Vector2(moveDirection, rigidbody2.linearVelocity.y);
+        }
+    }
 
 
     public void PlayerStats()
@@ -399,6 +501,15 @@ public class PlayerController : MonoBehaviour
 
         playerHealth = healthBar.currentHealth;
     }
+
+    public void ResetCombo()
+    {
+        if (comboTimer < resetComboTimer)
+        {
+            comboCount = 0;
+        }
+    }
+
 
     public void SwitchWeapon()
     {
@@ -446,6 +557,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Invunerability());
             }
     }
+
 
     public IEnumerator Invunerability()
     {
