@@ -442,7 +442,6 @@ public class PlayerController : MonoBehaviour
 
                 rigidbody2.linearVelocity = Vector2.up * jumpHeight;
                 jumpCount++;
-            Debug.Log("Character is grounded.");
         }
 
         if(Input.GetKey(KeyCode.Space) && isJumping)
@@ -467,8 +466,6 @@ public class PlayerController : MonoBehaviour
             
        
         if (!isGrounded) {
-
-            Debug.Log("Character is not grounded.");
 
             if (Input.GetKeyDown(KeyCode.Space) && jumpCount > 0)
             {
