@@ -22,7 +22,6 @@ public class Dummy : MonoBehaviour
     {
         if(health <= 0)
         {
-            Debug.Log("Dummy Defeated");
             health = 100;
         }
     }
