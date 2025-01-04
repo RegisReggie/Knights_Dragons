@@ -8,6 +8,8 @@ using TMPro;
 public class DialougeManager : MonoBehaviour
 {
 
+    public bool isChatStarted;
+
     public Queue<string> sentences;
 
     public TMP_Text nameText;
@@ -18,6 +20,7 @@ public class DialougeManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        isChatStarted = false;
         sentences = new Queue<string>();
     }
 
@@ -53,6 +56,7 @@ public class DialougeManager : MonoBehaviour
     public void EndDialogue()
     {
         animator.SetBool("isOpen", false);
+        isChatStarted = false;
     }
 }
  

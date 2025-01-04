@@ -5,15 +5,19 @@ public class Chat : MonoBehaviour
 
     public SpriteRenderer sr;
     public DialogueTrigger dialogueTrigger;
+    public DialougeManager dialougeManager;
 
     public bool canChat;
+    public bool isChatStart;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        dialougeManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialougeManager>();
         dialogueTrigger = GetComponent<DialogueTrigger>();
         sr = GetComponent<SpriteRenderer>();
         canChat = false;
+
     }
 
     // Update is called once per frame
@@ -25,13 +29,29 @@ public class Chat : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                dialogueTrigger.TriggerDialogue();
+                if (dialougeManager.isChatStarted == false)
+                {
+                    dialougeManager.isChatStarted = true;
+                    dialogueTrigger.TriggerDialogue();
+                }
+                else
+                {
+                    dialougeManager.DisplayNextSentence();
+                }
+                
             }
+
+            //if (Input.GetKeyDown(KeyCode.Z) && isChatStart)
+            //{
+            //    dialougeManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialougeManager>();
+            //    dialougeManager.DisplayNextSentence();
+            //}
 
         }
         else
         {
             sr.enabled = false;
+            dialougeManager.EndDialogue();
         }
     }
 
