@@ -13,9 +13,11 @@ public class Chat : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
         dialougeManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialougeManager>();
         dialogueTrigger = GetComponent<DialogueTrigger>();
         sr = GetComponent<SpriteRenderer>();
+        sr.enabled = false;
         canChat = false;
 
     }
@@ -40,13 +42,6 @@ public class Chat : MonoBehaviour
                 }
                 
             }
-
-            //if (Input.GetKeyDown(KeyCode.Z) && isChatStart)
-            //{
-            //    dialougeManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialougeManager>();
-            //    dialougeManager.DisplayNextSentence();
-            //}
-
         }
         else
         {
