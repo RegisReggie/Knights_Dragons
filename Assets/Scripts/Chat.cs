@@ -4,13 +4,14 @@ public class Chat : MonoBehaviour
 {
 
     public SpriteRenderer sr;
+    public DialogueTrigger dialogueTrigger;
 
     public bool canChat;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        dialogueTrigger = GetComponent<DialogueTrigger>();
         sr = GetComponent<SpriteRenderer>();
         canChat = false;
     }
@@ -24,7 +25,7 @@ public class Chat : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                Debug.Log("Can Talk");
+                dialogueTrigger.TriggerDialogue();
             }
 
         }
